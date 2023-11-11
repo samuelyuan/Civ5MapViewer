@@ -110,7 +110,7 @@ func (e *editor) SetHexCoordinates(x int, y int) {
 	 } else if tile.Improvement == 255 {
 		 improvement = "No Improvement"
 	 }
-	 e.currentHexProperties += fmt.Sprintf("Tile Improvement:%s\n", improvement)
+	 e.currentHexProperties += fmt.Sprintf("Tile Improvement: %s\n", improvement)
 
 	 routeType := "Unknown"
 	 if tile.RouteType == 0 {
