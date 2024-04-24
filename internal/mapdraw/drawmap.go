@@ -58,7 +58,7 @@ func GetHexCoordinates(pixelX int, pixelY int, mapHeight int, mapWidth int) (int
 			tileCenterPixelX, tileCenterPixelY := getImagePosition(i, j)
 
 			distanceToCenter := ((float64(pixelX) - tileCenterPixelX) * (float64(pixelX) - tileCenterPixelX)) +
-			  ((float64(pixelY) - tileCenterPixelY) * (float64(pixelY) - tileCenterPixelY))
+				((float64(pixelY) - tileCenterPixelY) * (float64(pixelY) - tileCenterPixelY))
 
 			if distanceToCenter < hexClosestDistance {
 				hexClosestDistance = distanceToCenter

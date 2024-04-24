@@ -37,14 +37,14 @@ func newPalette(edit *editor) fyne.CanvasObject {
 		physicalModeButton.Importance = widget.MediumImportance
 		politicalModeButton.Refresh()
 		physicalModeButton.Refresh()
-	});
+	})
 	physicalModeButton = widget.NewButtonWithIcon("Physical", theme.RadioButtonIcon(), func() {
 		edit.SetMapMode("physical")
 		politicalModeButton.Importance = widget.MediumImportance
 		physicalModeButton.Importance = widget.HighImportance
 		politicalModeButton.Refresh()
 		physicalModeButton.Refresh()
-	});
+	})
 
 	mapModeSelection := container.NewHBox(
 		widget.NewLabel("Map mode:"),
@@ -68,5 +68,5 @@ func newPalette(edit *editor) fyne.CanvasObject {
 		zoom,
 		mapModeSelection,
 		edit.hexTileProperties,
-		})...)
+	})...)
 }

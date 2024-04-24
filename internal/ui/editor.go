@@ -15,8 +15,8 @@ import (
 	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
 
-	"github.com/samuelyuan/Civ5MapViewer/internal/fileio"
 	"github.com/samuelyuan/Civ5MapViewer/internal/api"
+	"github.com/samuelyuan/Civ5MapViewer/internal/fileio"
 	"github.com/samuelyuan/Civ5MapViewer/internal/mapdraw"
 )
 
@@ -27,14 +27,14 @@ type editor struct {
 	cacheWidth, cacheHeight int
 	hexTileProperties       *widget.Label
 
-	uri  string
-	img  *image.RGBA
-	mapMode string
-	mapData *fileio.Civ5MapData
-	mapHeight int
-	mapWidth int
+	uri                  string
+	img                  *image.RGBA
+	mapMode              string
+	mapData              *fileio.Civ5MapData
+	mapHeight            int
+	mapWidth             int
 	currentHexProperties string
-	zoom int
+	zoom                 int
 
 	win        fyne.Window
 	recentMenu *fyne.Menu
@@ -70,59 +70,59 @@ func (e *editor) SetMapMode(mapMode string) {
 }
 
 func (e *editor) SetHexCoordinates(x int, y int) {
-	 hexX, hexY := mapdraw.GetHexCoordinates(x, y, e.mapHeight, e.mapWidth)
-	 e.currentHexProperties = ""
-	 e.currentHexProperties += fmt.Sprintf("Plot (%d, %d)\n", hexX, hexY)
+	hexX, hexY := mapdraw.GetHexCoordinates(x, y, e.mapHeight, e.mapWidth)
+	e.currentHexProperties = ""
+	e.currentHexProperties += fmt.Sprintf("Plot (%d, %d)\n", hexX, hexY)
 
-	 tile := e.mapData.MapTileImprovements[hexY][hexX]
-	 physicalTile := e.mapData.MapTiles[hexY][hexX]
+	tile := e.mapData.MapTileImprovements[hexY][hexX]
+	physicalTile := e.mapData.MapTiles[hexY][hexX]
 
-	 e.currentHexProperties += fmt.Sprintf("City: %s\n", tile.CityName)
-	 e.currentHexProperties += fmt.Sprintf("Owner: Player %d\n", tile.Owner)
+	e.currentHexProperties += fmt.Sprintf("City: %s\n", tile.CityName)
+	e.currentHexProperties += fmt.Sprintf("Owner: Player %d\n", tile.Owner)
 
-	 terrain := "Unknown"
-	 if physicalTile.TerrainType >= 0 && int(physicalTile.TerrainType) < len(e.mapData.TerrainList) {
-		 terrain = e.mapData.TerrainList[physicalTile.TerrainType]
-	 }
-	 e.currentHexProperties += fmt.Sprintf("Terrain: %s\n", terrain)
+	terrain := "Unknown"
+	if physicalTile.TerrainType >= 0 && int(physicalTile.TerrainType) < len(e.mapData.TerrainList) {
+		terrain = e.mapData.TerrainList[physicalTile.TerrainType]
+	}
+	e.currentHexProperties += fmt.Sprintf("Terrain: %s\n", terrain)
 
-	 elevation := "Unknown"
-	 if physicalTile.Elevation == 0 {
-		 elevation = "Flat Terrain"
-	 } else if physicalTile.Elevation == 1 {
-		 elevation = "Hills"
-	 } else if physicalTile.Elevation == 2 {
-		 elevation = "Mountains"
-	 }
-	 e.currentHexProperties += fmt.Sprintf("Elevation: %s\n", elevation)
+	elevation := "Unknown"
+	if physicalTile.Elevation == 0 {
+		elevation = "Flat Terrain"
+	} else if physicalTile.Elevation == 1 {
+		elevation = "Hills"
+	} else if physicalTile.Elevation == 2 {
+		elevation = "Mountains"
+	}
+	e.currentHexProperties += fmt.Sprintf("Elevation: %s\n", elevation)
 
-	 resource := "Unknown"
-	 if physicalTile.ResourceType >= 0 && int(physicalTile.ResourceType) < len(e.mapData.ResourceList) {
-		 resource = e.mapData.ResourceList[physicalTile.ResourceType]
-	 } else if physicalTile.ResourceType == 255 {
-		 resource = "No Resource"
-	 }
-	 e.currentHexProperties += fmt.Sprintf("Resource: %s\n", resource)
+	resource := "Unknown"
+	if physicalTile.ResourceType >= 0 && int(physicalTile.ResourceType) < len(e.mapData.ResourceList) {
+		resource = e.mapData.ResourceList[physicalTile.ResourceType]
+	} else if physicalTile.ResourceType == 255 {
+		resource = "No Resource"
+	}
+	e.currentHexProperties += fmt.Sprintf("Resource: %s\n", resource)
 
-	 improvement := "Unknown"
-	 if tile.Improvement >= 0 && int(tile.Improvement) < len(e.mapData.TileImprovementList) {
-		 improvement = e.mapData.TileImprovementList[tile.Improvement]
-	 } else if tile.Improvement == 255 {
-		 improvement = "No Improvement"
-	 }
-	 e.currentHexProperties += fmt.Sprintf("Tile Improvement: %s\n", improvement)
+	improvement := "Unknown"
+	if tile.Improvement >= 0 && int(tile.Improvement) < len(e.mapData.TileImprovementList) {
+		improvement = e.mapData.TileImprovementList[tile.Improvement]
+	} else if tile.Improvement == 255 {
+		improvement = "No Improvement"
+	}
+	e.currentHexProperties += fmt.Sprintf("Tile Improvement: %s\n", improvement)
 
-	 routeType := "Unknown"
-	 if tile.RouteType == 0 {
-		 routeType = "Road"
-	 } else if tile.RouteType == 1 {
-		 routeType = "Railroad"
-	 } else if tile.RouteType == 255 {
-		 routeType = "No Route"
-	 }
-	 e.currentHexProperties += fmt.Sprintf("Route: %s\n", routeType)
+	routeType := "Unknown"
+	if tile.RouteType == 0 {
+		routeType = "Road"
+	} else if tile.RouteType == 1 {
+		routeType = "Railroad"
+	} else if tile.RouteType == 255 {
+		routeType = "No Route"
+	}
+	e.currentHexProperties += fmt.Sprintf("Route: %s\n", routeType)
 
-	 e.hexTileProperties.SetText(e.currentHexProperties)
+	e.hexTileProperties.SetText(e.currentHexProperties)
 }
 
 func (e *editor) buildUI() fyne.CanvasObject {
@@ -227,7 +227,6 @@ func (e *editor) LoadFile(read fyne.URIReadCloser, mapMode string) {
 			return
 		}
 	}
-
 
 	var img image.Image
 	if e.mapMode == "physical" {

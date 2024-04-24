@@ -6,11 +6,11 @@ import (
 
 // Editor describes the editing capabilities
 type Editor interface {
-	BuildUI(fyne.Window)         // BuildUI Loads the main editor GUI
+	BuildUI(fyne.Window)                 // BuildUI Loads the main editor GUI
 	LoadFile(fyne.URIReadCloser, string) // LoadFile specifies a data stream to load from
-	Reload()                     // Reload will reset the image to its original state
-	Save()                       // Save writes the image back to its source location
-	SaveAs(fyne.URIWriteCloser)  // SaveAs specifies a data stream to save to
+	Reload()                             // Reload will reset the image to its original state
+	Save()                               // Save writes the image back to its source location
+	SaveAs(fyne.URIWriteCloser)          // SaveAs specifies a data stream to save to
 
 	SetMapMode(mapMode string)
 	SetHexCoordinates(x int, y int)
